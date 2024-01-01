@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1 class="text-center my-5 text-uppercase">Task Management System</h1>
+  <div class="row g-4 mb-5">
+    {% for i in data %}
+      <div class="col-sm-4 mb-3 mb-sm-0">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-text"><span class="fw-medium">ID :</span> {{ i.id }}</h5>
+            <h5 class="card-title"><span class="fw-bold">Title :</span> {{ i.taskTitle }}</h5>
+            <p class="card-text">
+              <span class="fw-bold">Date :</span> {{ i.assigned_date }}
+            </p>
+            <p class="card-text">
+              <span class="fw-bold">Description :</span> {{ i.taskDescription }}
+            </p>
+            <p class="fw-bold">Categories:</p>
+            {% for cat in i.category.all %}
+              <a href="#" class="btn btn-sm btn-outline-dark disabled">{{ cat.categoryName }}</a>
+            {% endfor %}
+            <br />
+            <div class="mt-3 d-flex justify-content-end gap-2">
+              {% if i.is_completed == False %}
+                <a class="btn btn-dark" href="{% url 'edit' i.id %}">Edit</a>
+                <a class="btn btn-dark" href="{% url 'delete' i.id %}">Delete</a>
+              {% else %}
+                <a class="btn btn-dark disabled" href="">Completed</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
